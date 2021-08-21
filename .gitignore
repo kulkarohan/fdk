@@ -25,3 +25,10 @@ jspm_packages/
 
 # System Files
 .DS_Store
+
+# Random files
+src/fractional.ts
+src/basket.ts
+src/vault.ts
+
+WORK.ts
