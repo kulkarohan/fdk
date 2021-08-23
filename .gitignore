@@ -27,8 +27,5 @@ jspm_packages/
 .DS_Store
 
 # Random files
-src/fractional.ts
-src/basket.ts
-src/vault.ts
-
+src/fdk.ts
 WORK.ts
