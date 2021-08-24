@@ -34,13 +34,13 @@ describe('Factory', () => {
     })
 
     it('should set the Factory instance to readOnly=false if a signer is specified', () => {
-      const fdk = new Factory(WALLET, 1)
-      expect(fdk.readOnly).to.equal(false)
+      const factory = new Factory(WALLET, 1)
+      expect(factory.readOnly).to.equal(false)
     })
 
     it('should set the Factory instance to readOnly=true if a signer is not provided', () => {
-      const fdk = new Factory(PROVIDER, 4)
-      expect(fdk.readOnly).to.equal(true)
+      const factory = new Factory(PROVIDER, 4)
+      expect(factory.readOnly).to.equal(true)
     })
 
     it('should initialize the Factory instance with the specified network address', () => {
@@ -49,29 +49,29 @@ describe('Factory', () => {
       const ERC721VaultFactoryMainnetAddress =
         '0x85aa7f78bdb2de8f3e0c0010d99ad5853ffcfc63'
 
-      const fdkRinkeby = new Factory(WALLET, 4)
-      const fdkMainnet = new Factory(WALLET, 1)
+      const factoryRinkeby = new Factory(WALLET, 4)
+      const factoryMainnet = new Factory(WALLET, 1)
 
-      expect(fdkRinkeby.vaultFactoryAddress).to.equal(
+      expect(factoryRinkeby.vaultFactoryAddress).to.equal(
         ERC721VaultFactoryRinkebyAddress
       )
-      expect(fdkMainnet.vaultFactoryAddress).to.equal(
+      expect(factoryMainnet.vaultFactoryAddress).to.equal(
         ERC721VaultFactoryMainnetAddress
       )
     })
   })
 
   describe('View Methods', () => {
-    const fdk = new Factory(WALLET, 1)
+    const factory = new Factory(WALLET, 1)
 
     it('should get the total vault count', async () => {
-      const vaultCount = await fdk.vaultCount()
+      const vaultCount = await factory.vaultCount()
       expect(vaultCount).to.have.a.property('_hex')
     })
 
     it('should get a vault address when provided an id', async () => {
       const vaultId = 5
-      const vaultAddress = await fdk.vaultAddress(vaultId)
+      const vaultAddress = await factory.vaultAddress(vaultId)
       expect(vaultAddress.toString().slice(0, 2)).to.equal('0x')
     })
 
@@ -79,24 +79,26 @@ describe('Factory', () => {
       const vaultIdThatDoesNotExistYet = 9999
       const zeroAddress = '0x0000000000000000000000000000000000000000'
 
-      const vaultAddress = await fdk.vaultAddress(vaultIdThatDoesNotExistYet)
+      const vaultAddress = await factory.vaultAddress(
+        vaultIdThatDoesNotExistYet
+      )
       expect(vaultAddress).to.equal(zeroAddress)
     })
 
     it('should get the vault factory settings address', async () => {
       const settingsAddress = '0x1C0857f8642D704ecB213A752A3f68E51913A779'
-      const factorySettings = await fdk.vaultSettings()
+      const factorySettings = await factory.vaultSettings()
       expect(factorySettings).to.equal(settingsAddress)
     })
 
     it('should fetch the contract address for a specified basket', async () => {
-      const address = await fdk.basketAddress(1)
+      const address = await factory.basketAddress(1)
       expect(address.toString().slice(0, 2)).to.equal('0x')
     })
   })
 
   describe('Write methods', () => {
-    const fdk = new Factory(WALLET, 4)
+    const factory = new Factory(WALLET, 4)
 
     it('should mint a token vault', async () => {
       const vaultData = constructVaultData(
@@ -109,7 +111,7 @@ describe('Factory', () => {
         0.1
       )
 
-      const tx = await fdk.mint(vaultData)
+      const tx = await factory.mint(vaultData)
       expect(tx).to.have.a.property('hash')
     })
 
@@ -128,7 +130,7 @@ describe('Factory', () => {
     })
 
     it('should create an index erc721 basket', async () => {
-      const tx = await fdk.createBasket()
+      const tx = await factory.createBasket()
       expect(tx).to.have.a.property('hash')
     })
   })
@@ -191,7 +193,7 @@ describe('Token Vault', () => {
       expect(price).to.have.a.property('_hex')
     })
 
-    it('should get the current price of the token during an auction', async () => {
+    it('should get the state of the auction', async () => {
       const state = await vault.auctionState()
       expect(state.toString()).to.contain.oneOf(['0', '1', '2', '3'])
     })
