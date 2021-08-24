@@ -2,7 +2,7 @@
 
 ```typescript
 import { ethers, Wallet } from 'ethers'
-import { Factory, Vault, constructVaultData } from './src'
+import { Factory, Vault, constructVaultData } from '@kulk/fdk'
 
 const provider = ethers.providers.someProvider()
 const wallet = new Wallet(key, provider)
