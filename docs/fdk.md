@@ -11,10 +11,10 @@ const factory = new Factory(wallet, 1) // Mainnet=1, Rinkeby=4
 
 // ------------ Factory Data ----------------------
 
-const vaultCount = await factory.getVaultCount() // total vault count
+const vaultCount = await factory.vaultCount() // total vault count
 const vaultId = 24 // vault id
-const vaultAddress = await factory.getVault(vaultId) // address of vault 24
-const settings = await factory.getSettings() // vault factory settings address
+const vaultAddress = await factory.vaultAddress(vaultId) // address of vault 24
+const settings = await factory.vaultSettings() // vault factory settings address
 
 // ------------ Fractionalizing an NFT ------------
 
@@ -36,7 +36,7 @@ await tx.wait(5)
 const vault = new Vault(wallet, vaultAddress)
 
 // Token information
-const tokenAddress = await vault.tokenAddress() // ERC721 address of a vault's toke
+const tokenAddress = await vault.tokenAddress() // ERC721 address of a vault's token
 const tokenId = await vault.tokenId() // ERC721 id of a vault's token
 
 // Auction information
