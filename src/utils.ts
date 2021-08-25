@@ -6,15 +6,6 @@ import { BigNumber, ethers } from 'ethers'
 
 /**
  * Constructs a VaultData type
- *
- * @param name
- * @param symbol
- * @param token
- * @param id
- * @param supply
- * @param listPrice
- * @param fee
- * @returns
  */
 export function constructVaultData(
   name: string,
@@ -26,15 +17,19 @@ export function constructVaultData(
   fee: number
 ): VaultData {
   const _token = validateAndParseAddress(token)
+
+  const _id = ethers.utils.parseUnits(String(id), 0)
+  const _supply = ethers.utils.parseUnits(String(supply))
   const _listPrice = ethers.utils.parseEther(String(listPrice))
+
   const _fee = validateCuratorFee(fee)
 
   return {
     name: name,
     symbol: symbol,
     token: _token,
-    id: id,
-    supply: supply,
+    id: _id,
+    supply: _supply,
     listPrice: _listPrice,
     fee: _fee,
   }
@@ -42,8 +37,6 @@ export function constructVaultData(
 
 /**
  * Returns the proper network name for the specified chainId
- *
- * @param chainId
  */
 export function chainIdToNetworkName(chainId: number): string {
   switch (chainId) {
@@ -54,7 +47,6 @@ export function chainIdToNetworkName(chainId: number): string {
       return 'mainnet'
     }
   }
-
   invariant(
     false,
     `chainId ${chainId} not officially supported by the Fractional Protocol`
@@ -63,8 +55,6 @@ export function chainIdToNetworkName(chainId: number): string {
 
 /**
  * Validates and returns the checksummed address
- *
- * @param address
  */
 export function validateAndParseAddress(address: string): string {
   try {
@@ -78,11 +68,10 @@ export function validateAndParseAddress(address: string): string {
 
 /**
  * Validates the fee set by the curator
- * @param fee
  */
 export function validateCuratorFee(fee: number): BigNumber {
   if (fee >= 0 && fee <= 0.1) {
-    return ethers.utils.parseEther(String(fee))
+    return ethers.utils.parseUnits(String(fee), 3)
   } else {
     invariant(
       false,
