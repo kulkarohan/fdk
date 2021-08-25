@@ -2,7 +2,7 @@ import invariant from 'tiny-invariant'
 import warning from 'tiny-warning'
 import { getAddress } from '@ethersproject/address'
 import { VaultData } from './types'
-import { BigNumber, ethers } from 'ethers'
+import { BigNumberish, ethers } from 'ethers'
 
 /**
  * Constructs a VaultData type
@@ -69,7 +69,7 @@ export function validateAndParseAddress(address: string): string {
 /**
  * Validates the fee set by the curator
  */
-export function validateCuratorFee(fee: number): BigNumber {
+export function validateCuratorFee(fee: number): BigNumberish {
   if (fee >= 0 && fee <= 0.1) {
     return ethers.utils.parseUnits(String(fee), 3)
   } else {

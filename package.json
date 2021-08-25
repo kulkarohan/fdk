@@ -1,6 +1,6 @@
 {
   "name": "@kulk/fdk",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "An SDK for using the Fractional.art protocol",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
