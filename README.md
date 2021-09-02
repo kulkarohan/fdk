@@ -3,6 +3,8 @@
 ### Overview
 
 The Fractional Development Kit (FDK) is a tool to interact with the Fractional Protocol.
+<br><br>
+Inspired by [@zoralabs/zdk](https://github.com/ourzora/zdk).
 
 ### Docs
 
